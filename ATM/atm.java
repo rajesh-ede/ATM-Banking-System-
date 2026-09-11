@@ -6,7 +6,7 @@ public class atm {
     private double withdraw;
 
     public atm() {
-        super();
+       Balance = 10000;
     }
 
     public double getBalance() {
