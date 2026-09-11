@@ -3,50 +3,78 @@ package ATM;
 import java.util.Scanner;
 
 public class UserInterface {
-    private static int status;
-    public static void main(String[] args){
+
+    public static void main(String[] args) {
 
         Atmoperation Ap = new Atmoperation();
         Scanner scan = new Scanner(System.in);
-        int atmnumber = 99893468;
+
+        String atmnumber = "1234567890";
         int atmpin = 7184;
-        System.out.println("WELCOME TO THE E.V.R ATM SERVICES");
-        System.out.println("ENTER THE ATM NUMBER : ");
-        int atmnum = scan.nextInt();
-        System.out.println("ENTER THE ATM PIN :");
+
+
+        System.out.println(" WELCOME TO ATM SERVICES \n");
+//        System.out.println("\n");
+
+        System.out.print("ENTER THE ATM NUMBER : ");
+        String atmnum = scan.next();
+
+        System.out.print("ENTER THE ATM PIN : ");
         int pin = scan.nextInt();
-        if(atmnumber == atmnum && atmpin == pin){
-            while(true) {
-                System.out.println("1.CheckBalance\n 2.WithdrawAmount\n 3.DepositAmount\n 4.ViewMiniStatement\n 5.Exit");
-                System.out.print("Enter your choice :");
+
+        if (atmnumber.equals(atmnum) && atmpin == pin) {
+
+            System.out.println("\nLogin Successful!");
+
+            while (true) {
+
+                System.out.println("\n--------- ATM MENU ---------");
+                System.out.println("1. Check Balance");
+                System.out.println("2. Withdraw Amount");
+                System.out.println("3. Deposit Amount");
+                System.out.println("4. View Mini Statement");
+                System.out.println("5. Exit");
+                System.out.println("----------------------------");
+
+                System.out.print("Enter your choice : ");
                 int ch = scan.nextInt();
+
                 switch (ch) {
+
                     case 1:
                         Ap.viewBalance();
                         break;
+
                     case 2:
-                        System.out.println("Enter amount to withdraw:");
+                        System.out.print("Enter amount to withdraw : ₹");
                         double withdrawAmount = scan.nextDouble();
+
                         Ap.withdrawAmount(withdrawAmount);
                         break;
+
                     case 3:
-                        System.out.println("Enter amount to deposit:");
+                        System.out.print("Enter amount to deposit : ₹");
                         double depositAmount = scan.nextDouble();
+
                         Ap.depositAmount(depositAmount);
                         break;
+
                     case 4:
                         Ap.viewMiniStatement();
                         break;
+
                     case 5:
-                        System.out.println("Collect your ATM Card\nThank you for using ATM  ");
-                        scan.close();
-                        System.exit(status);
+                        System.out.println("\nCollect your ATM Card.");
+                        System.out.println("Thank you for using ATM!");
+                        return;
+
                     default:
-                        System.out.println("Please enter a correct choice");
+                        System.out.println("Please enter a correct choice.");
                 }
             }
-        }else{
-            System.out.println("INCORRECT ATM NUMBER OR PIN");
+
+        } else {
+            System.out.println("\nINCORRECT ATM NUMBER OR PIN");
         }
     }
 }
