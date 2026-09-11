@@ -1,49 +1,79 @@
 package ATM;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Atmoperation implements AtmInterface{
 
     atm Atm = new atm();
-    Map<Double,String> mini = new HashMap<>();
+    List<String> mini = new ArrayList<>();
 
     @Override
     public void viewBalance() {
-       System.out.println("Availablebalance : " + Atm.getBalance() );
+       System.out.println("Available Balance :  ₹" + Atm.getBalance() );
     }
 
     @Override
     public void withdrawAmount(double withdrawAmount) {
-    if(withdrawAmount % 100 == 0){
-        if(withdrawAmount <= Atm.getBalance()){
-          System.out.println("Grab the cash"+ withdrawAmount);
-          Atm.setBalance(Atm.getBalance()-withdrawAmount);
-          mini.put(withdrawAmount,"Amount has been debited");
-          viewBalance();
-        }else{
-            System.out.println("Insufficient Balance");
+
+        if (withdrawAmount <= 0) {
+            System.out.println("Please enter a valid amount.");
+            return;
         }
 
-    }else{
-        System.out.println("Enter amount in terms of 500");
-    }
+
+        if (withdrawAmount % 100 != 0) {
+            System.out.println("Please enter amount in multiples of 100.");
+            return;
+        }
+
+        if (withdrawAmount <= Atm.getBalance()) {
+
+            Atm.setBalance(Atm.getBalance() - withdrawAmount);
+            Atm.setWithdraw(withdrawAmount);
+
+            System.out.println("Please collect your cash : ₹" + withdrawAmount);
+
+
+            mini.add("Withdrawn : ₹" + withdrawAmount);
+
+
+            viewBalance();
+
+        } else {
+            System.out.println("Insufficient Balance.");
+        }
     }
 
     @Override
     public void depositAmount(double depositAmount) {
-    System.out.println("depositAmount is : " + depositAmount);
-        Atm.setBalance(Atm.getBalance()+depositAmount);
-        mini.put(depositAmount,"deposited Successfully");
+
+        if (depositAmount <= 0) {
+            System.out.println("Please enter a valid amount.");
+            return;
+        }
+
+        Atm.setBalance(Atm.getBalance() + depositAmount);
+        Atm.setDepositAmount(depositAmount);
+
+        System.out.println("Amount Deposited : ₹" + depositAmount);
+        mini.add("Deposited : ₹" + depositAmount);
         viewBalance();
     }
-
     @Override
     public void viewMiniStatement() {
-     Set<Double> set = mini.keySet();
-     for(Double d : set){
-      System.out.println(d+"="+mini.get(d));
-     }
+
+        System.out.println("\n------ MINI STATEMENT ------");
+
+        if (mini.isEmpty()) {
+            System.out.println("No transactions available.");
+        } else {
+
+            for (String transaction : mini) {
+                System.out.println(transaction);
+            }
+        }
+
+        System.out.println("----------------------------");
+        System.out.println("Available Balance : ₹" + Atm.getBalance());
     }
-}
+    }
